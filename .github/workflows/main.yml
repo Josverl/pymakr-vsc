@@ -4,13 +4,12 @@ on: [push]
 
 jobs:
   build:
-    name: Compile ${{ matrix.os }} @ Node v${{ matrix.node }} Electron v${{ matrix.electron }}
+    name: Compile ${{ matrix.os }} @ Node v${{ matrix.node }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node: ['12', '11', '10']
         os: [windows-latest, ubuntu-latest, macos-latest]
-        electron: ['6.1.2']
     steps:
       - uses: actions/checkout@v1
 
@@ -22,14 +21,14 @@ jobs:
       - name: Install Compile Dependencies
         run: |
           npm install --ignore-scripts
-          npm install serialport node-abi --save
-          npm install -g npx
+          npm install serialport node-abi prebuild-install --save
+          npm install -g npx pwsh
 
       - name: Rebuild Bindings
-        run: npx electron-rebuild --version ${{ matrix.electron }} --force
+        run: npx pwsh ./scripts/mp-download.ps1
 
       - name: Upload Bindings
         uses: actions/upload-artifact@v1
         with:
-          name: ${{ matrix.os }}-node${{ matrix.node }}-elec${{ matrix.electron }}-bindings
-          path: ./node_modules/@serialport/bindings/build/Release/bindings.node
+          name: ${{ matrix.os }}-node${{ matrix.node }}-modules
+          path: ./native_modules
