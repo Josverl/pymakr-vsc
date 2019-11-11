@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         node: ['12', '11', '10']
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         electron: ['6.1.2']
     steps:
       - uses: actions/checkout@v1
