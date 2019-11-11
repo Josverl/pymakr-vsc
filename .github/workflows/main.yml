@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         node: ['12', '11', '10']
-        os: [ubuntu-latest, macos-latest]
+        os: [windows-latest, ubuntu-latest, macos-latest]
         electron: ['6.1.2']
     steps:
       - uses: actions/checkout@v1
@@ -19,11 +19,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install Dependencies
+      - name: Install Compile Dependencies
         run: |
-          npm install || true
-          npm install serialport node-abi --save || trye
-          npm install node-abi@1.5.0 --save || true
+          npm install --ignore-scripts
+          npm install serialport node-abi --save
           npm install -g npx
 
       - name: Rebuild Bindings
