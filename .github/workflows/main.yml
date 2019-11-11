@@ -22,7 +22,8 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-          npm install node-abi --save
+          npm install serialport node-abi --save
+          npm install node-abi@1.5.0 --save
           npm install -g npx
 
       - name: Rebuild Bindings
