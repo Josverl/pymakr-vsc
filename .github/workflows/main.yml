@@ -8,7 +8,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: ['12', '11', '10']
         os: [windows-latest, ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v1
@@ -25,7 +24,7 @@ jobs:
           npm install -g npx pwsh
 
       - name: Rebuild Bindings
-        run: npx pwsh ./scripts/mp-download.ps1
+        uses: ./.github/actions/compile-modules-action
 
       - name: Upload Bindings
         uses: actions/upload-artifact@v1

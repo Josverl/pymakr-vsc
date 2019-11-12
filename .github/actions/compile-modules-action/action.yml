@@ -1,0 +1,8 @@
+name: 'Compile Native Modules'
+description: 'Compiles Native Modules for XPlatform Support'
+outputs:
+  compiled:
+    description: 'List of compiled modules'
+runs:
+  using: 'node12'
+  main: 'index.js'
