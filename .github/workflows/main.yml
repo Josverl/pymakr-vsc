@@ -19,9 +19,9 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm install --ignore-scripts
-          npm install serialport node-abi --save
-          npm install npx pwsh
+          sudo npm install --ignore-scripts -g --unsafe-perm
+          sudo npm install serialport node-abi --save
+          sudo npm install -g npx pwsh
 
       - name: Rebuild Bindings
         uses: ./.github/actions/compile-modules-action
