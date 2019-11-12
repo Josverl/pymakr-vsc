@@ -1,8 +1,6 @@
 const core = require("@actions/core");
 const Octokit = require("@octokit/rest");
 const atob = require("atob");
-const util = require("util");
-const exec = util.promisify(require("child_process").exec);
 const { execSync } = require("child_process");
 
 const octokit = new Octokit();
@@ -59,7 +57,8 @@ const getVSCodeTags = async () => {
 };
 
 const execute = async command => {
-  const { stdout, stderr } = await exec(command);
+  core.info("Executing: ", command);
+  const { stdout, stderr } = execSync(command);
   if (stderr) {
     core.setFailed(stderr);
   }
