@@ -1,4 +1,4 @@
-name: Compile Native Modules
+name: Build and Test Pymakr
 
 on: [push, pull_request]
 
@@ -30,9 +30,14 @@ jobs:
       # - name: Run Tests
       #   run: npm run test
 
-      # Test if it can be packaged
       - name: Package Extension
-        run: npx vsce package
+        run: npx vsce package -o pymakr-${{ github.sha }}.vsix
+
+      - name: Upload VSIX
+        uses: actions/upload-artifact@master
+        with:
+          name: pymakr-${{ github.sha }}.vsix
+          path: ./pymakr-${{ github.sha }}.vsix
 
   deploy:
     name: Publish
