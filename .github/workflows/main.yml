@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v1.2.0
         with:
           node-version: ${{ matrix.node }}
 
@@ -21,7 +21,7 @@ jobs:
         run: |
           npm install --ignore-scripts
           npm install serialport node-abi --save
-          npm install -g npx pwsh
+          npm install npx pwsh
 
       - name: Rebuild Bindings
         uses: ./.github/actions/compile-modules-action
