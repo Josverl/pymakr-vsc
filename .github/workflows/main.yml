@@ -15,7 +15,12 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1.2.0
         with:
-          node-version: "10"
+          node-version: "12"
+
+      - name: Install Windows Build Tools
+        if: matrix.os == 'windows-latest'
+        run: |
+          npm install --global --production windows-build-tools
 
       - name: Install Dependencies
         run: |
