@@ -27,6 +27,9 @@ jobs:
           npm install npx
           npm install --no-audit
 
+      - name: Update Native Modules
+        run: npm run download-native
+
       # TODO
       # - name: Test Bindings
 
