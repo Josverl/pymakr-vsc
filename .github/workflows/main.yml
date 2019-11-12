@@ -25,9 +25,9 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          npm install --ignore-scripts
-          npm install serialport node-abi
-          npm install npx
+          npm install --ignore-scripts --no-audit
+          npm install serialport node-abi --no-audit
+          npm install npx --no-audit
 
       - name: Rebuild Bindings
         uses: ./.github/actions/compile-modules-action
