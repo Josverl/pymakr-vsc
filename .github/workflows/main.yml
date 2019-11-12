@@ -25,6 +25,7 @@ jobs:
         shell: bash
         run: |
           npm install npx
+          npm add prebuild-install --save-dev
           npm install --no-audit
 
       - name: Update Native Modules
