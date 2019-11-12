@@ -34,8 +34,5 @@ jobs:
         with:
           git-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Bindings
-        uses: actions/upload-artifact@v1
-        with:
-          name: ${{ matrix.os }}-node${{ matrix.node }}-modules
-          path: ./native_modules
+      - name: Report Git Status
+        run: git status -vv
