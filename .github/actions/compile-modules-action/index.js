@@ -1,9 +1,10 @@
 const core = require("@actions/core");
-const Octokit = require("@octokit/rest");
+const github = require("@actions/github");
 const atob = require("atob");
 const { execSync } = require("child_process");
 
-const octokit = new Octokit();
+const gitToken = core.getInput("git-token");
+const octokit = new github.GitHub(gitToken);
 
 const repo = {
   owner: "microsoft",

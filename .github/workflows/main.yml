@@ -30,6 +30,8 @@ jobs:
 
       - name: Rebuild Bindings
         uses: ./.github/actions/compile-modules-action
+        with:
+          git-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Bindings
         uses: actions/upload-artifact@v1
