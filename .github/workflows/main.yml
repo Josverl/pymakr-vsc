@@ -19,7 +19,9 @@ jobs:
 
       - name: Install Dependencies
         shell: bash
-        run: npm install --no-audit
+        run: |
+          npm install npx
+          npm install --no-audit
 
       # TODO
       # - name: Test Bindings
@@ -30,7 +32,7 @@ jobs:
 
       # Test if it can be packaged
       - name: Package Extension
-        run: vsce package
+        run: npx vsce package
 
   deploy:
     name: Publish
@@ -46,7 +48,7 @@ jobs:
           npm prune --production
 
       - name: Package Extension
-        run: vsce package
+        run: npx vsce package
 
       - name: Publish Extension
-        run: vsce publish --pat ${{ secrets.VSCE_TOKEN }}
+        run: npx vsce publish --pat ${{ secrets.VSCE_TOKEN }}
