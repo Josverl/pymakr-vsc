@@ -10,6 +10,13 @@ const repo = {
   repo: "vscode"
 };
 
+/**
+ * Resolves Electron runtime target for given
+ * VSCode git tag
+ *
+ * @param {string} tag - VSCode Git Tag
+ * @returns {*} Object with tag and runtime_version
+ */
 const resolveElectronVersion = async tag => {
   // Fetch .yarnrc file (contains electron target)
   const response = await octokit.repos.getContents({
@@ -28,6 +35,12 @@ const resolveElectronVersion = async tag => {
   };
 };
 
+/**
+ * Fetches VSCode Git Tags
+ * from repo
+ *
+ * @returns {string[]} Array containing master and 3 of the latest tags
+ */
 const getVSCodeTags = async () => {
   console.log("Fetching tags...");
   const repo_tags = await octokit.repos.listTags({
@@ -56,6 +69,12 @@ const getVSCodeTags = async () => {
   return tags;
 };
 
+/**
+ * Execute a command in shell
+ *
+ * @param {string} command - command to execute
+ * @returns {*} - Command output
+ */
 const execute = async command => {
   const { stdout, stderr } = execSync(command, { encoding: "utf8" });
   if (stderr) {
@@ -64,11 +83,21 @@ const execute = async command => {
   return stdout;
 };
 
+/**
+ * Harvests bindings via mp-download
+ *
+ * @param {*} runtime_version - Electron runtime version to harvest bindings for
+ */
 const harvestModules = async runtime_version => {
   const cmd = `pwsh ./scripts/mp-download.ps1 -harvest -runtime_version ${runtime_version}`;
   await execute(cmd);
 };
 
+/**
+ * Compile Native modules
+ *
+ * @param {*} [{ tag, runtime_version }={}] - Git Tag and Electron runtime version to compile for
+ */
 const compileModules = async ({ tag, runtime_version } = {}) => {
   console.info(
     `Compiling for VSCode Version: ${tag} - Electron: ${runtime_version}`
