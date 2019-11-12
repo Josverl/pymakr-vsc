@@ -8,21 +8,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [windows-latest, ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v1
 
       - name: Setup node
         uses: actions/setup-node@v1.2.0
         with:
-          node-version: ${{ matrix.node }}
+          node-version: "10"
 
       - name: Install Dependencies
         run: |
           npm install --ignore-scripts
           npm install serialport node-abi
-          sudo npm install -g npx
-          sudo chmod -R 777 ./node_modules
+          npm install npx
 
       - name: Rebuild Bindings
         uses: ./.github/actions/compile-modules-action

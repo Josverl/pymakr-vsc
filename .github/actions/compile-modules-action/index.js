@@ -57,13 +57,10 @@ const getVSCodeTags = async () => {
 };
 
 const execute = async command => {
-  core.info("Executing: ", command);
-  const { stdout, stderr } = execSync(command);
+  const { stdout, stderr } = execSync(command, { encoding: "utf8" });
   if (stderr) {
     core.setFailed(stderr);
   }
-  console.log(stdout);
-  core.info(stdout);
   return stdout;
 };
 
