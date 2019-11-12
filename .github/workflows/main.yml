@@ -1,4 +1,4 @@
-name: Compile SerialPort Bindings
+name: Compile Native Modules
 
 on: [push]
 
