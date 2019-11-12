@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    name: Compile ${{ matrix.os }} @ Node v${{ matrix.node }}
+    name: Compile ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -17,10 +17,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install Compile Dependencies
+      - name: Install Dependencies
         run: |
           npm install --ignore-scripts
-          npm install serialport node-abi prebuild-install --save
+          npm install serialport node-abi --save
           npm install -g npx pwsh
 
       - name: Rebuild Bindings
