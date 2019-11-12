@@ -1,11 +1,10 @@
 name: Build and Test Pymakr
 
-on: 
-  push
-  pull_request
+on:
+  pull_request: ~
+  push: ~
   schedule:
-    # execute daily
-    - cron: '* * 1 * *'
+    - cron: "* * 1 * *"
 
 jobs:
   build:
@@ -48,7 +47,8 @@ jobs:
   deploy:
     name: Publish
     needs: build
-    if: github.ref == 'refs/heads/master'
+    # if current branch name contains release and is not a PR
+    if: contains(github.ref, 'release') && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
