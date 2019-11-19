@@ -195,7 +195,7 @@
     "spdx-correct": "^3.0.0",
     "spdx-exceptions": "^2.1.0",
     "telnet-client": "^0.13.0",
-    "typescript": "^2.0.3",
+    "typescript": "^3.7.2",
     "utf8": "^3.0.0",
     "xterm": "^2.9.2"
   },
