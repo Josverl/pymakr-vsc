@@ -219,7 +219,7 @@
     "babel-preset-es2015": "6.24.1",
     "chai": "^4.2.0",
     "eslint": "^6.6.0",
-    "mocha": "^6.2.2",
+    "mocha": "^7.0.0",
     "prebuild-install": "^5.3.3",
     "vscode": "^1.1.36"
   }
