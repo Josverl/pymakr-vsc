@@ -205,7 +205,7 @@
     "safe-buffer": "^5.2.0",
     "serialport": "^8.0.5",
     "spdx-correct": "^3.1.0",
-    "spdx-exceptions": "^2.2.0",
+    "spdx-exceptions": "^2.3.0",
     "telnet-client": "^1.2.3",
     "typescript": "^3.7.5",
     "utf8": "^3.0.0",
