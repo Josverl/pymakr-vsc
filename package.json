@@ -194,7 +194,7 @@
     "electron-rebuild": "^1.10.0",
     "element-resize-detector": "1.2.1",
     "lie": "^3.3.0",
-    "nan": "2.14.0",
+    "nan": "2.14.1",
     "ncp": "^2.0.0",
     "node-abi": "^2.12.0",
     "object.assign": "^4.1.0",
