@@ -202,7 +202,7 @@
     "promirepl": "^2.0.1",
     "prompt-list": "^3.2.0",
     "rxjs": "^6.5.4",
-    "safe-buffer": "^5.2.0",
+    "safe-buffer": "^5.2.1",
     "serialport": "^8.0.5",
     "spdx-correct": "^3.1.0",
     "spdx-exceptions": "^2.2.0",
