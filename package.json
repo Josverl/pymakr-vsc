@@ -212,7 +212,7 @@
     "xterm": "^4.3.0"
   },
   "devDependencies": {
-    "@types/mocha": "^7.0.1",
+    "@types/mocha": "^8.0.2",
     "@types/node": "^13.7.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
