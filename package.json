@@ -191,7 +191,7 @@
     "crypto-js": "^4.0.0",
     "debug": "^4.1.1",
     "electron": "^6.1.2",
-    "electron-rebuild": "^1.10.0",
+    "electron-rebuild": "^2.1.1",
     "element-resize-detector": "1.2.1",
     "lie": "^3.3.0",
     "nan": "2.14.1",
