@@ -392,7 +392,9 @@ switch ($PSCmdlet.ParameterSetName)
         #    npm install prebuild-install --save-dev
         # (c) jos_verlinde@hotmail.com
         # licence MIT
-    
+        
+        npm update node-abi
+
         foreach ($mod in "node-abi","prebuild-install","serialport" ){
             if(-not ( $package.devDependencies."$mod" -or $package.dependencies."$mod") ) {
                 Write-Error "Missing npm dependency: $mod. Please run 'npm install $mod --save-dev'" 
