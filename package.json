@@ -197,7 +197,7 @@
     "nan": "2.14.1",
     "ncp": "^2.0.0",
     "node-abi": "^2.19.1",
-    "object.assign": "^4.1.0",
+    "object.assign": "^4.1.1",
     "ora": "^4.0.3",
     "promirepl": "^2.0.1",
     "prompt-list": "^3.2.0",
