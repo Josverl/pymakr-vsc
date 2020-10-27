@@ -11,24 +11,24 @@ While the ABI interface does not change for each version of electron/node, it do
 So over time , as VSCode is updated and moves to a newer version of electron, at some point in time the required ABI version will change, and unless a *correct* binding is available, pymakr will not be able to communicate to the serial port.store functionality
 Over the last year this has occurred several times, and each time it required considerable time and manual effort to restore functionality.
 
+
+
 **Current State:**  
 
-Branch | OS |CPU| Build  & Electron Test | Unit Testing
---------|-|-|-------|--
-main | ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=main) |
- " | Windows | x64| ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=main&jobName=Build%20windows-latest )
- " | Linux | x64| ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=main&jobName=Build%20ubuntu-latest )
- "| MacOS | x64| ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=main&jobName=Build%20macos-latest )
+Branch | OS | Build  | Electron Test
+--------|-|--------|--
+master | |![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=master)
+ " | Windows | ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=master&jobName=Build%20windows-latest )
+  " | Linux | ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=master&jobName=Build%20ubuntu-latest )
+ "| MacOS | ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=master&jobName=Build%20macos-latest )
  ||
-develop | ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=develop ) |
- " | Windows | x64| ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=develop&jobName=Build%20windows-latest )
- " | Linux | x64| ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=develop&jobName=Build%20ubuntu-latest )
- "| MacOS | x64| ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=develop&jobName=Build%20macos-latest )
- ||
-fix/Serialport_804 |![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=fix/SerialMultiPlatform_804 )|
- " | Windows | x64| ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=fix/SerialMultiPlatform_804&jobName=Build%20windows-latest )
- " | Linux | x64| ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=fix/SerialMultiPlatform_804&jobName=Build%20ubuntu-latest )
- "| MacOS | x64| ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=fix/SerialMultiPlatform_804&jobName=Build%20macos-latest )
+fix/Serialport_804 || ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=fix/SerialMultiPlatform_804 )
+ " | Windows | ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=fix/SerialMultiPlatform_804&jobName=Build%20windows-latest )
+  " | Linux | ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=fix/SerialMultiPlatform_804&jobName=Build%20ubuntu-latest )
+ "| MacOS | ![Build Status](https://github.com/Josverl/pymakr-vsc/workflows/Build%20Pymakr/badge.svg?branch=fix/SerialMultiPlatform_804&jobName=Build%20macos-latest )
+
+
+
 
 ## Solution: Include native modules for multiple platforms, and future versions 
 
@@ -64,8 +64,11 @@ This wil result in :
 * the native modules can be transparently checked in to Source Control,
 * After the solution packaged, it is ready for use. no local compilation is required by the end users in order to use the serialport, 
 
-#### Packaging and Release  
-Packaging  for multiple platforms and multiple past and future version of VSCode now can be as simple as :
+- [ ] cleanup mp-download script 
+    - [ ] documentation on structure 
+    - [ ] remove unneeded structure 
+    - [x] get & add electron version for given VSCode versions 
+    - [ ] get & add installed node version to allow simpler debugging / testing (replace current hardcoded version)
 
 1. download/refresh the binary bindings
     * `.\scripts\mp-download.ps1`
@@ -80,8 +83,25 @@ Packaging  for multiple platforms and multiple past and future version of VSCode
 6. Publish 
     * `vsce Publish`
 
+- [ ] ask for upstream fix (bindings) on hardcoded runtime (how to detect runtime electron/node ?) 
+- [x] Save native modules to project folder (native_modules) to (better) allow check-in & avoid permanent removal by `npm ci`
 
-#### parameters relevant to determining the correct binding
+- [ ]project build 
+    - [ ] copy native_modules as a pre-package tasks 
+            ```
+              "scripts": {
+                            "vscode:prepublish": "copy native_modules node_modules /s /q"
+                }
+            ```
+    - [ ] integrate into / replace install.js 
+        - [?] only trigger rebuild when serialport cannot be loaded  
+        - [?] translate PS1 script into javascript ? ( lots of effort )
+        - [?] call PS1 script from install.js (https://github.com/IonicaBizau/powershell)
+
+- [x] make sure mp-download.ps1 runs (on PowerShell core ) 
+    - [x] on windows 
+    - [x] on linux 
+    - [ ] on mac
 
 what        | description                   | example                           |
 ------------|-------------------------------|-----------------------------------|
@@ -193,8 +213,9 @@ For node the folder naming convention is:
 
 Each folder contains one file named `bindings.node` which is compiled for that platform.
 
-The files are stored in a `native_modules` folder to allow them to be checked in to source control
-in addition the files are also copied to the node_modules folder by the .ps1 script unless  `-nocopy` is specified 
+The files are stored in a native_modules folder to allow them to be checked in to source control
+in addition the files are also copied to the node_modules folder 
+
 
 The resulting folder structure is :
 ```
