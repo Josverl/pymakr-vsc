@@ -32,7 +32,7 @@ sudo apt-get install -y powershell
 
 ## install powershell using npm 
 
-powershall can / should also be installed for use by npm. in order to make this work cross-platform a simple way to do this is by adding a dev dependency using the below commans.
+powershell can / should also be installed for use by npm. in order to make this work cross-platform a simple way to do this is by adding a dev dependency using the below commans.
 This will add a symlink in the project folder : /node_modules/pwsh/bin/pwsh that pints to the actual pwsh core installed on the machine.
 
 from npm 
