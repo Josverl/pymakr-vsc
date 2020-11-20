@@ -3,6 +3,7 @@ param(
     $electron_version = ('7.3.2' , '9.2.1')
 )
 # '4.2.5','5.0.10','6.1.2'
+# 9.3.3,9.3.3,9.2.1
 
 # #########################################################################################################
 #  Setup 
@@ -27,7 +28,8 @@ function ActionFail ($msg) {
 
 
 foreach ($version in $electron_version) { 
-    write-host "get ready to test on electron $version"
+    
+    write-host "::group::Test on electron $version"
 
     # Root Project 
     # write-host "Root Project: <Delete rootfolder>/node_modules/*" 
@@ -42,8 +44,9 @@ foreach ($version in $electron_version) {
     Remove-Item $test_folder/node_modules/* -Recurse -Force -ErrorAction SilentlyContinue
 
     #npm install 
-    write-host "TEST Project: install electron version $version"
+    write-host "::group::[electron-test] install electron version $version"
     npm install electron@$version
+    write-host "::group::" # end github action group
 
     #sanity check
     npx electron --version
@@ -51,35 +54,39 @@ foreach ($version in $electron_version) {
     # --- Root Project 
     cd $root_folder
 
-    Write-Host "Root Project: Prep for CI Install (npm ci)"
+    Write-Host "::group::[Root Project]: Prep for CI Install (npm ci)"
     npm ci
     npm prune
-
+    write-host "::group::" # end github action group
+    
     # also make sure that the native modules are in place for the test 
     # No need top copy twice if root project has ta postinstall script
     # &$root_folder/scripts/mp-download.ps1 -copyonly
-
+    
     #--- Test project 
     cd $test_folder 
-
+    
     # use a version of bindings module that provides some more output on what is loaded 
     # todo: check that the root project is indeed using the same version or build a path version 
     # hardcoded for bindings@1.5.0
     copy-item $test_folder/bindings_1.5.0/bindings.js $root_folder/node_modules/bindings/bindings.js -force -Verbose
-
-    write-host "run test app" 
+    
+    write-host "::group::run test app in Electron $version" 
     # &npx electron test/index.js
     #npm run test
     npx electron ./index.js
+    write-host "::group::" # end github action group
     if ($LASTEXITCODE -ne 0 ) {
         #--- Root Project 
         cd $root_folder
-        ActionFail "serial port cannot be loaded, try to re-build"
+        ActionFail "serial port cannot be loaded, try to re-build or download new binaries"
     }
     else {
         #--- Root Project 
         cd $root_folder
     }
+    
+    write-host "::group::" # end github action group
 
 }
 #finally 
