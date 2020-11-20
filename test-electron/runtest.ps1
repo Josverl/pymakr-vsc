@@ -1,9 +1,9 @@
 #!/usr/bin/env pwsh
 param(
-    $electron_version = ('7.3.2' , '9.2.1')
+    $electron_version = ('7.3.2' , ' 9.3.3')
 )
 # '4.2.5','5.0.10','6.1.2'
-# 9.3.3,9.3.3,9.2.1
+#,9.3.3,9.2.1
 
 # #########################################################################################################
 #  Setup 
@@ -17,7 +17,8 @@ cd $root_folder
 if (!$electron_version.GetType().isArray) {
     $electron_version = $electron_version -split ','
 }
-
+# remove duplicate version to speed up testing
+$electron_version = $electron_version | sort-object | select-Object -Unique 
 
 function ActionFail ($msg) {
     # Fails Github Action and reports error message
@@ -28,18 +29,12 @@ function ActionFail ($msg) {
 
 
 foreach ($version in $electron_version) { 
-    
     write-host "::group::Test on [Electron $version]"
-
-    # Root Project 
-    # write-host "Root Project: <Delete rootfolder>/node_modules/*" 
-    # Remove-Item $root_folder/node_modules/* -Recurse -Force -ErrorAction SilentlyContinue
 
     #--- Test project 
     write-host "::group::[Electron $version]Test Project: Delete <rootfolder>/test-electron/node_modules/*" 
     cd $test_folder
     # test folder should be npm initialised as a nodejs project 
-
     # Clean out the test/node_modules to avoid interrerence with other/earlier installs
     Remove-Item $test_folder/node_modules/* -Recurse -Force -ErrorAction SilentlyContinue
 

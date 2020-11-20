@@ -36,9 +36,17 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
+          echo '::group::npm install npx'
           npm install npx
+          echo '::endgroup::'
+
+          echo '::group::npm add prebuild-install'
           npm add prebuild-install --save-dev
+          echo '::endgroup::'
+
+          echo '::group::npm install --no-audit'
           npm install --no-audit
+          echo '::endgroup::'
 
       #      todo: fix errors in running prebuild-install in Action runners
       #      - name: Update Native Modules
