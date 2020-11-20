@@ -83,7 +83,7 @@ foreach ($version in $electron_version) {
         #--- Root Project 
         cd $root_folder
     }
-    
+
     write-host "::endgroup::" # end github action group
 
 }
