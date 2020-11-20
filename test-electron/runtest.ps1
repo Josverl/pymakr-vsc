@@ -12,7 +12,6 @@ param(
 $root_folder = Join-Path $PSScriptRoot -ChildPath '..'
 $test_folder = $PSScriptRoot
 cd $root_folder
-
 # Ensure electron_version is a list
 if (!$electron_version.GetType().isArray) {
     $electron_version = $electron_version -split ','
