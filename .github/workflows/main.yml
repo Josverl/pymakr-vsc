@@ -57,7 +57,7 @@ jobs:
 
       # generic all up electron test
       - name: Test Bindings (macOS/Windows)
-        if: matrix.os != 'ubuntu-latest'
+        if: contains(matrix.os,'ubuntu') == false
         run: npm run test-electron -- ${{ steps.electron.outputs.versions }}
 
       # electron tests with virtual x server
