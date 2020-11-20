@@ -20,3 +20,4 @@ native_modules/**/config.gypi
 native_modules/**/**/config.gypi
 
 .DS_Store
+.vscode/settings.json

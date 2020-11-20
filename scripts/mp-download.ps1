@@ -4,13 +4,7 @@
     DefaultParameterSetName='download'
 )]
 param (
-
-    # ToDo: read module version from package.json
-    # the (sub module = @serialport/bindings@9.0.1)
-    $module_name = '@serialport/bindings',
-    $module_ver  = '9.0.1',
-
-    # Copy
+    # Copy 
     [Parameter(ParameterSetName='copyonly')]
     [switch]$copyonly,
 
@@ -81,6 +75,13 @@ param (
 
 
 )
+
+# read module version from package.json 
+# the (sub module = @serialport/bindings@8.0.4)
+
+$module_name = '@serialport/bindings'
+$pkg = Get-Content .\package-lock.json | Convertfrom-Json
+$module_ver = $pkg.dependencies.'@serialport/bindings'.version
 
 # #########################################################################################################
 #  parameter fixup,  expect array @('x.x.x'), convert from string passed by npm
@@ -391,6 +392,8 @@ switch ($PSCmdlet.ParameterSetName)
         #    npm install prebuild-install --save-dev
         # (c) jos_verlinde@hotmail.com
         # licence MIT
+        
+        npm update node-abi
 
         foreach ($mod in "node-abi","prebuild-install","serialport" ){
             if(-not ( $package.devDependencies."$mod" -or $package.dependencies."$mod") ) {
