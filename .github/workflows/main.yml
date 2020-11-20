@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest, Ubuntu-20.04]
+        os: [windows-latest, macos-latest, ubuntu-latest, ubuntu-20.04]
     steps:
       - uses: actions/checkout@v1
 
@@ -62,7 +62,7 @@ jobs:
 
       # electron tests with virtual x server
       - name: Test Bindings (Linux)
-        if: matrix.os == 'ubuntu-latest'
+        if: contains(matrix.os,'ubuntu')
         run: xvfb-run -e /dev/stdout -a npm run test-electron -- ${{ steps.electron.outputs.versions }}
 
       # No tests written :(
