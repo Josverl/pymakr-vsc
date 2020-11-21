@@ -235,7 +235,7 @@ param(
         # from : \@serialport\bindings\build\Release\bindings.node
         # to a folder per "abi<ABI_ver>-<platform>-<arch>"
         switch ($loadmethod) {
-            'node' {        # use the node version for the path ( implemended by binding) 
+            'node' {        # use the node version for the path ( implemented by binding) 
                             # supported by ('binding')('serialport')
                             # <root>/node_modules/@serialport/bindings/compiled/<version>/<platform>/<arch>/binding.node
                             # Note: runtime is not used in path 
@@ -243,7 +243,7 @@ param(
 
                             # make sure the containing folder exists
                             $dest_folder = (split-Path $dest_file -Parent)
-                            new-item dest_folder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+                            new-item $dest_folder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
                             # copy all *.node native bindings
                             Get-ChildItem $src_folder -Filter "*.node"       | Copy-Item -Destination $dest_folder -Container
                             # additional files to help identify the binary in the future 
