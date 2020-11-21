@@ -9,7 +9,7 @@ on:
 jobs:
   download:
 
-    name: "update serialport on ${{ matrix.os }}"
+    name: "update serialport"
     runs-on: ubuntu-latest
     # No need to run om multiple in parallel as each PR will overwrite/force-push any prior changes
     # runs-on: ${{ matrix.os }}
@@ -49,7 +49,7 @@ jobs:
           title: 'Update serialport native bindings'
           commit-message: adding new serialport native bindings
           base: develop
-          branch: develop/serialport_bindings
+          branch: serialport_bindings/develop
           # branch: serialportbindings/${{ steps.extract_branch.outputs.branch }}
           labels: |
             automated pr
