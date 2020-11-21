@@ -35,5 +35,5 @@ jobs:
 
       - name: Download  
         shell: pwsh
-        run: scripts\mp-download.ps1
+        run: scripts/mp-download.ps1
 
