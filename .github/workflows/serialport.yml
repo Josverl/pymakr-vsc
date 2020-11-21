@@ -1,13 +1,14 @@
-name: "update serialport bindings"
+name: pdate serialport bindings
 
 on:
   schedule: 
     - cron: "45 23 * * *"
+  
   workflow_dispatch:
-
 
 jobs:
   download:
+
     name: "update serialport on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     strategy:
@@ -42,10 +43,11 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         # ref: https://github.com/peter-evans/create-pull-request
         with:
-          title: 'update serialport on '
-          commit-message: add/update minified
-          base: master
-          branch: serialportbindings/-${{ steps.extract_branch.outputs.branch }}
+          title: 'update serialport bindings'
+          commit-message: adding bindings from ${{ matrix.os }}
+          base: develop
+          branch: serialport_bindings/develop
+          # branch: serialportbindings/${{ steps.extract_branch.outputs.branch }}
           labels: |
             automated pr
 
