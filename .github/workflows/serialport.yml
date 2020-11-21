@@ -1,4 +1,4 @@
-name: update serialport bindings
+name: "update serialport bindings"
 
 on:
   workflow_dispatch
