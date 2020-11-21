@@ -39,7 +39,7 @@ jobs:
 
       - name: Download  
         shell: pwsh
-        run: scripts/mp-download.ps1
+        run: scripts/mp-download.ps1 -NoCopy -IgnoreNodeVersion
 
       - name: Create PR with new native bindings
         if: 
@@ -52,5 +52,6 @@ jobs:
           branch: serialport_bindings/develop
           # branch: serialportbindings/${{ steps.extract_branch.outputs.branch }}
           labels: |
+            serialport
             automated pr
 
