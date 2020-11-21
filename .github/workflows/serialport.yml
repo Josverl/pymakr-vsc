@@ -1,22 +1,29 @@
-name: update serialport
+name: Update serialport native bindings
 
 on:
-  workflow_dispatch
-  # push:
-  #   branches-ignore:
-  #     - "dependabot/**"
-  #   paths-ignore:
-  #     - "doc/**"
-  # schedule:
-  #   # Run everyday at 1am
-  #   - cron: "0 1 * * *"
+  schedule: 
+    - cron: "45 23 * * *"
+  
+  workflow_dispatch:
 
 jobs:
-  build:
+  download:
+
     name: "update serialport"
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    # No need to run om multiple in parallel as each PR will overwrite/force-push any prior changes
+    # runs-on: ${{ matrix.os }}
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-latest]
+    #     # os: [windows-latest, ubuntu-20.04]
     steps:
       - uses: actions/checkout@v1
+
+      - name: Extract branch name
+        id: extract_branch
+        shell: pwsh
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
 
       - name: Setup node
         uses: actions/setup-node@v1
@@ -32,5 +39,19 @@ jobs:
 
       - name: Download  
         shell: pwsh
-        run: scripts\mp-download.ps1
+        run: scripts/mp-download.ps1 -NoCopy -IgnoreNodeVersion
+
+      - name: Create PR with new native bindings
+        if: 
+        uses: peter-evans/create-pull-request@v3
+        # ref: https://github.com/peter-evans/create-pull-request
+        with:
+          title: 'Update serialport native bindings'
+          commit-message: adding new serialport native bindings
+          base: develop
+          branch: serialport_bindings/develop
+          # branch: serialportbindings/${{ steps.extract_branch.outputs.branch }}
+          labels: |
+            serialport
+            automated pr
 
