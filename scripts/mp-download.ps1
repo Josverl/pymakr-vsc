@@ -517,6 +517,7 @@ switch ($PSCmdlet.ParameterSetName)
             CopyNativeModules $native_modules  (Join-Path $root_folder 'node_modules') 
         }
         Write-Host -ForegroundColor blue "Platform bindings are listed in: $docs_file"
+        exit 0
     }
 
     Default {
