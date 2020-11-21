@@ -21,6 +21,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Extract branch name
+        id: extract_branch
+        shell: pwsh
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -36,4 +41,15 @@ jobs:
       - name: Download  
         shell: pwsh
         run: scripts/mp-download.ps1
+
+      - name: Create PR with new native bindings
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        # ref: https://github.com/peter-evans/create-pull-request
+        with:
+          title: 'update serialport on '
+          commit-message: add/update minified
+          branch: serialportbindings/${{ steps.extract_branch.outputs.branch }}
+          labels: |
+            automated pr
 
