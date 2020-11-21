@@ -1,4 +1,4 @@
-name: pdate serialport bindings
+name: Update serialport native bindings
 
 on:
   schedule: 
@@ -10,10 +10,13 @@ jobs:
   download:
 
     name: "update serialport on ${{ matrix.os }}"
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-20.04]
+    runs-on: ubuntu-latest
+    # No need to run om multiple in parallel as each PR will overwrite/force-push any prior changes
+    # runs-on: ${{ matrix.os }}
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-latest]
+    #     # os: [windows-latest, ubuntu-20.04]
     steps:
       - uses: actions/checkout@v1
 
@@ -43,10 +46,10 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         # ref: https://github.com/peter-evans/create-pull-request
         with:
-          title: 'update serialport bindings'
-          commit-message: adding bindings from ${{ matrix.os }}
+          title: 'Update serialport native bindings'
+          commit-message: adding new serialport native bindings
           base: develop
-          branch: serialport_bindings/develop
+          branch: develop/serialport_bindings
           # branch: serialportbindings/${{ steps.extract_branch.outputs.branch }}
           labels: |
             automated pr
