@@ -1,0 +1,36 @@
+name: update serialport
+
+on:
+  workflow_dispatch
+  # push:
+  #   branches-ignore:
+  #     - "dependabot/**"
+  #   paths-ignore:
+  #     - "doc/**"
+  # schedule:
+  #   # Run everyday at 1am
+  #   - cron: "0 1 * * *"
+
+jobs:
+  build:
+    name: "update serialport"
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+
+      - name: Install Dependencies
+        shell: pwsh
+        run: |
+          echo '::group::npm install --no-audit'
+          npm install --no-audit
+          echo '::endgroup::'
+
+      - name: Download  
+        shell: pwsh
+        run: scripts\mp-download.ps1
+
