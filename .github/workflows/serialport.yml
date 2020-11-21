@@ -1,15 +1,10 @@
 name: "update serialport bindings"
 
 on:
+  schedule: 
+    - cron: "45 23 * * *"
   workflow_dispatch
-  schedule:
-    - cron: "0 1 * * *"
-    # Run everyday at 1am
-    # push:
-    #   branches-ignore:
-    #     - "dependabot/**"
-    #   paths-ignore:
-    #     - "doc/**"
+
 
 jobs:
   download:
