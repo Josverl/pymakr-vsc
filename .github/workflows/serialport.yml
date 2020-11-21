@@ -3,13 +3,13 @@ name: update serialport bindings
 on:
   workflow_dispatch
   schedule:
-    # Run everyday at 1am
     - cron: "0 1 * * *"
-  # push:
-  #   branches-ignore:
-  #     - "dependabot/**"
-  #   paths-ignore:
-  #     - "doc/**"
+    # Run everyday at 1am
+    # push:
+    #   branches-ignore:
+    #     - "dependabot/**"
+    #   paths-ignore:
+    #     - "doc/**"
 
 jobs:
   download:
@@ -43,13 +43,14 @@ jobs:
         run: scripts/mp-download.ps1
 
       - name: Create PR with new native bindings
-        id: cpr
+        if: 
         uses: peter-evans/create-pull-request@v3
         # ref: https://github.com/peter-evans/create-pull-request
         with:
           title: 'update serialport on '
           commit-message: add/update minified
-          branch: serialportbindings/${{ steps.extract_branch.outputs.branch }}
+          base: master
+          branch: serialportbindings/-${{ steps.extract_branch.outputs.branch }}
           labels: |
             automated pr
 
