@@ -3,7 +3,7 @@ name: "update serialport bindings"
 on:
   schedule: 
     - cron: "45 23 * * *"
-  workflow_dispatch
+  workflow_dispatch:
 
 
 jobs:
