@@ -9,3 +9,25 @@ Includes support for electron/node versions:
 * VSCode [1.49.0] uses Electron 9.2.1 , ABI: 80
 * VSCode [1.50.0] uses Electron 9.2.1 , ABI: 80
 * VSCode [1.51.0] uses Electron 9.3.3 , ABI: 80
+Includes support for electron/node versions:
+* VSCode [master] uses Electron 11.0.2 , ABI: 85
+* VSCode [1.36.0] uses Electron 4.2.5 , ABI: 69
+* VSCode [1.49.0] uses Electron 9.2.1 , ABI: 80
+* VSCode [1.50.0] uses Electron 9.2.1 , ABI: 80
+* VSCode [1.51.0] uses Electron 9.3.3 , ABI: 80
+* electron 11.0.2 uses ABI 85
+* electron 4.2.5 uses ABI 69
+   - win32   , x64  
+   - win32   , ia32 
+   - darwin  , x64  
+   - linux   , x64  
+* electron 9.2.1 uses ABI 80
+   - win32   , x64  
+   - win32   , ia32 
+   - darwin  , x64  
+   - linux   , x64  
+* electron 9.3.3 uses ABI 80
+   - win32   , x64  
+   - win32   , ia32 
+   - darwin  , x64  
+   - linux   , x64  
