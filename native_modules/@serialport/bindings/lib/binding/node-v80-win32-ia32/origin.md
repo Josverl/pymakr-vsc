@@ -3,7 +3,7 @@
 
     # Target
     runtime     : electron
-    version     : 9.3.3
+    version     : 9.3.5
     platform    : win32
     arch        : ia32
     abi         : 80
