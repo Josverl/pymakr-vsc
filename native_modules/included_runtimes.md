@@ -36,3 +36,11 @@ Includes support for electron/node versions:
    - win32   , ia32 
    - darwin  , x64  
    - linux   , x64  
+* electron 11.2.1 uses ABI 85
+   - win32   , x64  
+   - darwin  , x64  
+   - linux   , x64  
+* electron 11.2.3 uses ABI 85
+   - win32   , x64  
+   - darwin  , x64  
+   - linux   , x64  
