@@ -199,7 +199,7 @@
     "prompt-list": "^3.2.0",
     "rxjs": "^6.6.3",
     "safe-buffer": "^5.2.1",
-    "serialport": "^9.0.4",
+    "serialport": "^9.0.6",
     "spdx-correct": "^3.1.1",
     "spdx-exceptions": "^2.3.0",
     "telnet-client": "^1.4.6",
