@@ -188,7 +188,7 @@
     "debug": "^4.3.1",
     "electron": "^7.2.4",
     "electron-rebuild": "^2.3.5",
-    "element-resize-detector": "1.2.1",
+    "element-resize-detector": "1.2.2",
     "lie": "^3.3.0",
     "nan": "2.14.2",
     "ncp": "^2.0.0",
