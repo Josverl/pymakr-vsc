@@ -26,6 +26,14 @@ jobs:
         with:
           node-version: "12"
 
+      - name: build github action
+        shell: bash
+        run: |
+          cd ./.github/actions/fetch-electron-versions
+          npm install
+          npm run build
+          cd ../../../
+
       - name: Fetch Electron Versions
         id: electron
         uses: ./.github/actions/fetch-electron-versions

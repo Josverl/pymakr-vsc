@@ -1,3 +1,19 @@
+## 1.1.12 - Compatibility vscode 1.53
+- fix serialports binding for new vscode 1.56.0
+
+## 1.1.11 - Compatibility vscode 1.53
+- fix binding for Linux
+
+## 1.1.10 - Compatibility vscode 1.53
+- fix binding for windows
+
+## 1.1.9 - Compatibility vscode 1.53
+- fix binding issue
+
+## 1.1.8 - Compatibility vscode 1.53
+- Updated node-abi to latest version
+- Compatibility fix with VSC 1.53.0
+
 ## 1.1.7 - Compatibility vscode 1.49
 - Updated to serialport 9.0.1
 - Compatibility fix with VSC 1.490

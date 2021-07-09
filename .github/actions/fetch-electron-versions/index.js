@@ -54,7 +54,8 @@ const getVSCodeTags = async (count = 3) => {
   // Filter valid tags
   let valid_tags = repo_tags.data.filter(i => {
     let vers = i.name;
-    if (vers.includes("vsda") || vers.includes("translation")) {
+
+    if (vers.includes("vsda") || vers.includes("translation") || vers === "1.999.0") {
       return false;
     }
     if (versReg.test(vers)) {
@@ -66,7 +67,7 @@ const getVSCodeTags = async (count = 3) => {
   core.debug(`Valid tags: ${valid_tags}`);
 
   // Prepend master tag
-  const tags = ["master", ...valid_tags];
+  const tags = ["main", ...valid_tags];
   return tags;
 };
 

@@ -1,12 +1,11 @@
 #!/usr/bin/env pwsh
 param(
-    $electron_version = ('7.3.2' , ' 9.3.3')
+    $electron_version = ('7.3.2' , '11.2.1')
 )
-# '4.2.5','5.0.10','6.1.2'
-#,9.3.3,9.2.1
+# '4.2.5','5.0.10','6.1.2','9.3.3','9.2.1', '11.2.1'
 
 # #########################################################################################################
-#  Setup 
+#  Setup
 # #########################################################################################################
 
 $root_folder = Join-Path $PSScriptRoot -ChildPath '..'
@@ -72,14 +71,62 @@ foreach ($version in $electron_version) {
         #--- Root Project 
         cd $root_folder
         ActionFail "serial port cannot be loaded, try to re-build or download new binaries"
-    }
-    else {
-        #--- Root Project 
-        cd $root_folder
-    }
+        =======
+        foreach ($version in $electron_version) {
+            write-host "get ready to test on electron $version"
 
-    write-host "::endgroup::" # end github action group
+            # Root Project
+            # write-host "Root Project: <Delete rootfolder>/node_modules/*"
+            # Remove-Item $root_folder/node_modules/* -Recurse -Force -ErrorAction SilentlyContinue
 
-}
-#finally 
-exit(0)
+            #--- Test project
+            cd $test_folder
+            # test folder should be npm initialised as a nodejs project
+            write-host "Test Project: Delete <rootfolder>/test-electron/node_modules/*"
+
+            # Clean out the test/node_modules to avoid interrerence with other/earlier installs
+            Remove-Item $test_folder/node_modules/* -Recurse -Force -ErrorAction SilentlyContinue
+
+            #npm install
+            write-host "TEST Project: install electron version $version"
+            npm install electron@$version --silent --quiet
+
+            #sanity check
+            npx electron --version
+
+            # --- Root Project
+            cd $root_folder
+
+            Write-Host "Root Project: Prep for CI Install (npm ci)"
+            npm ci --silent --quiet
+            npm prune
+
+            # also make sure that the native modules are in place for the test
+            # No need top copy twice if root project has ta postinstall script
+            # &$root_folder/scripts/mp-download.ps1 -copyonly
+
+            #--- Test project
+            cd $test_folder
+
+            # use a version of bindings module that provides some more output on what is loaded
+            # todo: check that the root project is indeed using the same version or build a path version
+            # hardcoded for bindings@1.5.0
+            # copy-item $test_folder/bindings_1.5.0/bindings.js $root_folder/node_modules/bindings/bindings.js -force -Verbose
+            # make sure you have bindings installed on teh root_folder level
+
+            write-host "run test app"
+
+            npx electron ./index.js
+            cd $root_folder
+
+            if ($LASTEXITCODE -ne 0 ) {
+                ActionFail "serial port cannot be loaded, try to re-build"
+                >>>>>>> upstream/master
+            }
+
+            write-host "::endgroup::" # end github action group
+
+        }
+
+        #finally
+        exit(0)
